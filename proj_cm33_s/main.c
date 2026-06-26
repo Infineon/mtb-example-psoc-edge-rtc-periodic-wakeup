@@ -47,18 +47,18 @@
 /*****************************************************************************
 * Macros
 ******************************************************************************/
-#define CM33_NS_APP_BOOT_ADDR      (CYMEM_CM33_0_m33_nvm_START + CYBSP_MCUBOOT_HEADER_SIZE) 
+#define CM33_NS_APP_BOOT_ADDR      (CYMEM_CM33_0_m33_nvm_START + CYBSP_MCUBOOT_HEADER_SIZE)
 /*****************************************************************************
 * Function Name: main
 ******************************************************************************
 * This is the main function for Cortex M33 CPU secure application
 * NOTE: CM33 secure project assumes that certain memory and peripheral regions
 * will be accessed from non-secure environment by the CM33 NS /CM55 code,
-* For such regions MPC and PPC configurations are applied by cybsp_init to make 
-* it non-secure. Any access to these regions from the secure side is recommended 
-* to be done before the MPC/PPC configuration is applied.Once a memory or 
-* peripheral region is marked as non secure it cannot be accessed from the secure 
-* side using secure aliased address but may be accessed using non secure aliased 
+* For such regions MPC and PPC configurations are applied by cybsp_init to make
+* it non-secure. Any access to these regions from the secure side is recommended
+* to be done before the MPC/PPC configuration is applied.Once a memory or
+* peripheral region is marked as non secure it cannot be accessed from the secure
+* side using secure aliased address but may be accessed using non secure aliased
 * address
 
 * NOTE: In this code example we skip the MPC and PPC initializations in
@@ -92,7 +92,7 @@ int main(void)
         __disable_irq();
 
         CY_ASSERT(0);
-        
+
         /* Infinite loop */
         while(true);
 
@@ -101,21 +101,21 @@ int main(void)
     /* Enable global interrupts */
     __enable_irq();
 
-    /* 
+    /*
     * Initialize the clock for the APP_MMIO_TCM (512K) peripheral group.
-    * This sets up the necessary clock and peripheral routing to ensure 
+    * This sets up the necessary clock and peripheral routing to ensure
     * the APP_MMIO_TCM can be correctly accessed and utilized.
     */
     Cy_SysClk_PeriGroupSlaveInit(
-        CY_MMIO_CM55_TCM_512K_PERI_NR, 
-        CY_MMIO_CM55_TCM_512K_GROUP_NR, 
-        CY_MMIO_CM55_TCM_512K_SLAVE_NR, 
+        CY_MMIO_CM55_TCM_512K_PERI_NR,
+        CY_MMIO_CM55_TCM_512K_GROUP_NR,
+        CY_MMIO_CM55_TCM_512K_SLAVE_NR,
         CY_MMIO_CM55_TCM_512K_CLK_HF_NR
     );
 
-    /* 
+    /*
     * Initialize the clock for the SMIF0 peripheral group.
-    * This sets up the necessary clock and peripheral routing to ensure 
+    * This sets up the necessary clock and peripheral routing to ensure
     * the SMIF0 can be correctly accessed and utilized.
     */
     Cy_SysClk_PeriGroupSlaveInit(
@@ -125,15 +125,20 @@ int main(void)
         CY_MMIO_SMIF0_CLK_HF_NR
     );
 
+#if defined(CYBSP_OSPI_FLASH_SS_ENABLED)
+    /* Initialize SMIF in OSPI mode */
+    status = external_memory_init(OSPI);
+#else
     /* Initialize SMIF in QSPI mode */
     status = external_memory_init(QSPI);
+#endif
     if(CY_SMIF_SUCCESS != status)
     {
         /* Disable all interrupts. */
         __disable_irq();
 
         CY_ASSERT(0);
-        
+
         /* Infinite loop */
         while(true);
     }
@@ -172,7 +177,7 @@ int main(void)
 
     ns_stack = (uint32_t)(*((uint32_t*)CM33_NS_APP_BOOT_ADDR));
     __TZ_set_MSP_NS(ns_stack);
-    
+
     NonSecure_ResetHandler = (cy_cmse_funcptr)(*((uint32_t*)(CM33_NS_APP_BOOT_ADDR + 4)));
 
     /* Start non-secure application */

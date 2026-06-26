@@ -3,10 +3,11 @@
 This code example demonstrates the process of entering into System DeepSleep and Hibernate modes, as well as the means to awaken from them using the RTC alarm.
 
 This code example has a three project structure - CM33 Secure, CM33 Non-Secure, and CM55 projects. Extended Boot launches the CM33 Secure project present in RRAM from a fixed location, which then configures the external QSPI flash in XIP mode and launches the CM33 Non-Secure application. Additionally, CM33 Non-Secure application enables CM55 CPU and launches the CM55 application in external flash.
+> **Note:** On the KIT_PSE84_HMI, CM33 Secure project present in RRAM configures the external OSPI flash instead of QSPI.
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-psoc-edge-rtc-periodic-wakeup)
 
-[Provide feedback on this code example.](https://yourvoice.infineon.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzk1NTYiLCJTcGVjIE51bWJlciI6IjAwMi0zOTU1NiIsIkRvYyBUaXRsZSI6IlBTT0MmdHJhZGU7IEVkZ2UgTUNVOiBSVEMgcGVyaW9kaWMgd2FrZSB1cCIsInJpZCI6ImFkdmFpdGppdGVuZHJhLm5lcmxpa2FyQGluZmluZW9uLmNvbSIsIkRvYyB2ZXJzaW9uIjoiMi4xLjAiLCJEb2MgTGFuZ3VhZ2UiOiJFbmdsaXNoIiwiRG9jIERpdmlzaW9uIjoiTUNEIiwiRG9jIEJVIjoiSUNXIiwiRG9jIEZhbWlseSI6IlBTT0MifQ==)
+[Provide feedback on this code example.](https://yourvoice.infineon.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzk1NTYiLCJTcGVjIE51bWJlciI6IjAwMi0zOTU1NiIsIkRvYyBUaXRsZSI6IlBTT0MmdHJhZGU7IEVkZ2UgTUNVOiBSVEMgcGVyaW9kaWMgd2FrZSB1cCIsInJpZCI6ImFkdmFpdGppdGVuZHJhLm5lcmxpa2FyQGluZmluZW9uLmNvbSIsIkRvYyB2ZXJzaW9uIjoiMi4yLjAiLCJEb2MgTGFuZ3VhZ2UiOiJFbmdsaXNoIiwiRG9jIERpdmlzaW9uIjoiTUNEIiwiRG9jIEJVIjoiSUNXIiwiRG9jIEZhbWlseSI6IlBTT0MifQ==)
 
 See the [Design and implementation](docs/design_and_implementation.md) for the functional description of this code example.
 
@@ -31,7 +32,7 @@ See the [Design and implementation](docs/design_and_implementation.md) for the f
 
 - [PSOC&trade; Edge E84 Evaluation Kit](https://www.infineon.com/KIT_PSE84_EVAL) (`KIT_PSE84_EVAL_EPC2`) – Default value of `TARGET`
 - [PSOC&trade; Edge E84 Evaluation Kit](https://www.infineon.com/KIT_PSE84_EVAL) (`KIT_PSE84_EVAL_EPC4`)
-
+- [PSOC&trade; Edge E84 HMI Kit](https://www.infineon.com/KIT_PSE84_HMI) (`KIT_PSE84_HMI`)
 
 ## Hardware setup
 
@@ -106,6 +107,7 @@ Document title: *CE239556* – *PSOC&trade; Edge MCU: RTC periodic wake up*
  1.x.0   | New code example <br> Early access release
  2.0.0   | GitHub release
  2.1.0   | Updated design files to fix ModusToolbox&trade; v3.7 build warnings
+ 2.2.0   | Added support for KIT_PSE84_HMI
 <br>
 
 
